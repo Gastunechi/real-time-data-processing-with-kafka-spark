@@ -57,7 +57,27 @@ Ce projet montre comment intégrer Apache Kafka avec Apache Spark Streaming pour
          java -cp "$KAFKA_HOME/libs/*:." SimpleProducer Hello-Kafka
       ```
        Consommateur personalisé:
+         Le code java du producteur est fournit dans le repo dans le fichier SimpleConsumer.java
      
+     Compiler et exécuter le consommateur :
+      ```sh
+         javac -cp "$KAFKA_HOME/libs/*" SimpleConsumer.java
+         java -cp "$KAFKA_HOME/libs/*:." SimpleConsumer Hello-Kafka
+      ```
 
+   7. Intégration de Kafka avec Spark
+      Créer un projet Maven dans votre IDE et configurer le pom.xml pour inclure les dépendances Kafka et Spark. la configuration est fournie dans le fichier pom.xml du repo.
+      Créer le package tn.insat.tp3 et la classe SparkKafkaWordCount.
+      Utiliser Maven pour compiler et assembler le projet.
+      ```sh
+         mvn clean compile assembly:single
+      ```
+      Copier le fichier JAR généré dans le conteneur Docker et exécuter l'application Spark avec spark-submit.
+      ```sh
+         docker cp target/stream-kafka-spark-1-jar-with-dependencies.jar hadoop-master:/root
+      ```
+      Lancer l'Application Spark
+      ```sh
+         Commande : spark-submit --class tn.insat.tp3.SparkKafkaWordCount --master local[2] stream-kafka-spark-1-jar-with-dependencies.jar localhost:2181 test Hello-Kafka 1 >> out
    
 
